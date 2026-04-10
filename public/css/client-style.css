@@ -1,0 +1,127 @@
+.main-header { font-family: Arial, sans-serif; }
+/* Khung layout chia 2 cột: Sidebar 250px | Content còn lại */
+.main-layout {
+    display: flex;
+    gap: 20px;
+    width: 1200px;
+    margin: 20px auto;
+}
+.sidebar { 
+        width: 300px; /* Tăng từ 250px lên 300px để đỡ trống */
+        flex-shrink: 0; 
+        background: #fff; 
+        border: 1px solid #e0e0e0; 
+        border-radius: 8px; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Thêm đổ bóng nhẹ */
+        overflow: hidden;
+    }
+
+    .sidebar-title {
+        background: #0056b3; 
+        color: white; 
+        padding: 18px 20px; /* Tăng padding cho to rõ */
+        margin: 0; 
+        font-size: 18px; 
+        text-transform: uppercase;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .sidebar ul { 
+        list-style: none; 
+        padding: 0; 
+        margin: 0; 
+    }
+
+    .sidebar ul li { 
+        border-bottom: 1px solid #f0f0f0; 
+    }
+
+    .sidebar ul li a {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px; /* Tăng khoảng cách các mục danh mục */
+        text-decoration: none; 
+        color: #333; 
+        font-size: 15px; /* Chữ to hơn chút */
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    /* Hiệu ứng khi di chuột vào (giống image_bfeae6.png) */
+    .sidebar ul li a:hover { 
+        background: #f8f9fa; 
+        color: #0056b3; 
+        padding-left: 30px; /* Đẩy chữ sang phải khi hover */
+    }
+
+    /* Thêm một mũi tên nhỏ bên phải mỗi danh mục cho sang */
+    .sidebar ul li a::after {
+        content: '\f105'; /* Icon mũi tên FontAwesome */
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        font-size: 12px;
+        color: #ccc;
+    }
+
+
+.content {
+    flex: 1;
+}
+
+/* Lưới sản phẩm chia 4 cột */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.product-card {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 15px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.product-img img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+}
+/* Top Bar */
+.top-bar { background: pink; color: #fff; font-size: 12px; padding: 5px 0; }
+.container-header { width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.top-links a { color: #fff; text-decoration: none; margin-left: 15px; }
+
+/* Header Middle */
+.header-middle { background: pink; padding: 20px 0; color: white; }
+.logo h1 span { color: #87ceeb; }
+
+/* Ô Search giống mẫu */
+.search-box form { display: flex; background: white; border-radius: 4px; overflow: hidden; width: 500px; }
+.search-box select { border: none; padding: 10px; border-right: 1px solid #ddd; outline: none; }
+.search-box input { border: none; padding: 10px; flex: 1; outline: none; }
+.search-box button { background: #4caf50; color: white; border: none; padding: 0 20px; cursor: pointer; }
+
+/* Contact */
+.header-contact { display: flex; gap: 20px; }
+.contact-item { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.contact-item i { font-size: 24px; color: #87ceeb; }
+
+/* Menu Nav */
+.main-nav { background: rgb(219, 139, 153); border-top: 1px solid rgba(255,255,255,0.1); }
+.nav-list { list-style: none; padding: 0; margin: 0; display: flex; }
+.nav-list li a { color: white; text-decoration: none; padding: 15px 20px; display: block; text-transform: uppercase; font-size: 13px; font-weight: bold; }
+.nav-list li a:hover, .nav-list li a.active { background: #003a70; }
+
+.mini-cart { background: rgba(0,0,0,0.2); padding: 15px 20px; }
+.mini-cart a { color: white; text-decoration: none; font-weight: bold; }
+.cart-count { background: #ff9800; padding: 2px 6px; border-radius: 50%; font-size: 11px; }
