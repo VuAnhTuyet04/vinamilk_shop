@@ -21,7 +21,16 @@
             <label>Tên sản phẩm:</label>
             <input type="text" name="name" value="{{ $product->name }}" required>
         </div>
-
+  <div class="form-group" style="margin-bottom: 15px;">
+            <label style="font-weight: bold; display: block; margin-bottom: 5px;">Danh mục sản phẩm:</label>
+            <select name="category_id" class="form-control" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                @foreach($categories as $cat)
+                    <option value="{{ $cat->id }}" {{ $product->category_id == $cat->id ? 'selected' : '' }}>
+                        {{ $cat->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
         <div class="form-group">
             <label>Giá bán (đ):</label>
             <input type="number" name="price" value="{{ (int)$product->price }}" required>

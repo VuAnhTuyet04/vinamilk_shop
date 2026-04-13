@@ -94,10 +94,10 @@ class AdminController extends Controller
         return redirect('/admin')->with('success', 'Đã xóa sản phẩm thành công!');
     }
     // 1. Hàm hiển thị form sửa với dữ liệu cũ
-public function edit($id)
-{
+public function edit($id) {
     $product = Product::findOrFail($id);
-    return view('admin.edit', compact('product'));
+    $categories = Category::all(); // Lấy tất cả danh mục để hiển thị trong dropdown
+    return view('admin.edit', compact('product', 'categories'));
 }
 
 // 2. Hàm xử lý cập nhật dữ liệu
@@ -125,6 +125,7 @@ public function update(Request $request, $id)
     }
 
     $product->save();
-    return redirect('/admin')->with('success', 'Cập nhật sản phẩm thành công!');
+ return redirect()->route('admin.products.index')
+                     ->with('success', 'Cập nhật sản phẩm thành công ');
 }
 }

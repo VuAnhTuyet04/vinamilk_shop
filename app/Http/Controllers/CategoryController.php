@@ -45,6 +45,6 @@ class CategoryController extends Controller {
     public function destroy($id) {
         Category::destroy($id);
         return redirect()->route('categories.index');
-    }
-    
+    return redirect()->route('admin.product.index')->with('success', 'Cập nhật sản phẩm thành công!');
+}
 }

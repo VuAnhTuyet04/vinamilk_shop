@@ -134,17 +134,21 @@
                 <div class="product-name">{{ $p->name }}</div>
                 <div class="product-price">{{ number_format($p->price) }}đ</div>
                 
-                <div class="action-btns">
-                   <a href="{{ route('admin.edit', $p->id) }}" class="btn-edit">Sửa</a>
-                    
-                    <form action="{{ route('admin.destroy', $p->id) }}" method="POST" style="flex: 1;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn-delete" onclick="return confirm('Bạn có chắc muốn xóa?')">
-                            <i class="bi bi-trash"></i> Xóa
-                        </button>
-                    </form>
-                </div>
+           <div class="action-btns">
+    {{-- Nút Sửa --}}
+    <a href="{{ route('admin.edit', $p->id) }}" class="btn-edit">
+        <i class="bi bi-pencil-square"></i> Sửa
+    </a>
+    
+    {{-- Form Xóa --}}
+    <form action="{{ route('admin.destroy', $p->id) }}" method="POST" style="flex: 1; margin: 0;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn-delete" onclick="return confirm('Bạn có chắc muốn xóa?')">
+            <i class="bi bi-trash"></i> Xóa
+        </button>
+    </form>
+</div>  
             </div>
         </div>
         @endforeach
