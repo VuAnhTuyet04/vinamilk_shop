@@ -28,7 +28,16 @@
             <label>Ghi chú đơn hàng (nếu có):</label><br>
             <textarea name="note" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; height: 50px;"></textarea>
         </div>
-
+<div class="payment-method" style="margin-top: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9;">
+    <label style="display: flex; align-items: center; cursor: pointer; font-weight: 500; color: #333;">
+        {{-- Checkbox luôn được tích (checked) và không cho bỏ tích (onclick return false) --}}
+        <input type="checkbox" name="payment_method" value="COD" checked onclick="return false;" style="width: 18px; height: 18px; margin-right: 10px;">
+        Thanh toán khi nhận hàng (COD)
+    </label>
+    <p style="margin: 5px 0 0 28px; font-size: 13px; color: #666; font-style: italic;">
+        (Bạn sẽ thanh toán tiền mặt cho nhân viên giao hàng khi nhận được sản phẩm)
+    </p>
+</div>
         {{-- 3. Nút xác nhận gửi form --}}
         <button type="submit" class="btn-buy-now-small" style="width: 100%; padding: 12px; font-weight: bold; background: #ee4d2d; color: #fff; border: none; cursor: pointer; border-radius: 4px;">
             XÁC NHẬN ĐẶT HÀNG
