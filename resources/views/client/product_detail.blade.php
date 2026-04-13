@@ -31,6 +31,36 @@
     .related-img { width: 100%; height: 180px; object-fit: contain; }
     .related-name { font-size: 13px; color: #333; margin: 10px 0 5px 0; height: 38px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
     .related-price { color: #ee4d2d; font-size: 15px; font-weight: 500; }
+    .related-btn-detail {
+        display: block;
+        margin-top: 10px;
+        padding: 6px 0;
+        background: #008d81; /* Màu xanh giống thanh tiêu đề mô tả của bạn */
+        color: #fff !important;
+        text-decoration: none;
+        font-size: 12px;
+        border-radius: 2px;
+        transition: 0.3s;
+    }
+    .related-btn-detail:hover {
+        background: #005a52;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .related-btn-detail {
+        display: block;
+        margin-top: 10px;
+        padding: 6px 0;
+        background: #008d81; /* Màu xanh giống thanh tiêu đề mô tả của bạn */
+        color: #fff !important;
+        text-decoration: none;
+        font-size: 12px;
+        border-radius: 2px;
+        transition: 0.3s;
+    }
+    .related-btn-detail:hover {
+        background: #005a52;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
 </style>
 
 <div class="product-detail-container">
@@ -85,19 +115,23 @@
         </div>
     </div>
 </div>
-
-{{-- GIỮ NGUYÊN PHẦN SẢN PHẨM LIÊN QUAN --}}
 @if(isset($relatedProducts) && $relatedProducts->count() > 0)
     <h2 class="related-title">Sản phẩm liên quan</h2>
     <div class="related-grid">
         @foreach($relatedProducts as $item)
-            <a href="{{ route('client.product_detail', $item->slug) }}" class="related-item">
-                <img src="{{ asset('images/' . $item->thumbnail) }}" alt="{{ $item->name }}" class="related-img">
-                <div class="related-name">{{ $item->name }}</div>
-                <div class="related-price">
-                    {{ number_format($item->discount_price > 0 ? $item->discount_price : $item->price, 0, ',', '.') }}đ
-                </div>
-            </a>
+            <div class="related-item">
+                <a href="{{ route('client.product_detail', $item->slug) }}" style="text-decoration: none;">
+                    <img src="{{ asset('images/' . $item->thumbnail) }}" alt="{{ $item->name }}" class="related-img">
+                    <div class="related-name">{{ $item->name }}</div>
+                    <div class="related-price">
+                        {{ number_format($item->discount_price > 0 ? $item->discount_price : $item->price, 0, ',', '.') }}đ
+                    </div>
+                </a>
+                {{-- Nút xem chi tiết thêm mới ở đây --}}
+                <a href="{{ route('client.product_detail', $item->slug) }}" class="related-btn-detail">
+                    Xem chi tiết
+                </a>
+            </div>
         @endforeach
     </div>
 @endif
