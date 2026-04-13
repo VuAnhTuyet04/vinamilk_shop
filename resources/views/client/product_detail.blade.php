@@ -20,47 +20,29 @@
     .btn-add-cart-small { background: #ffeee8; border: 1px solid #ee4d2d; color: #ee4d2d; padding: 10px 20px; cursor: pointer; font-size: 14px; border-radius: 2px; text-decoration: none; }
     .btn-buy-now-small { background: #ee4d2d; color: #fff; border: none; padding: 10px 30px; cursor: pointer; font-size: 14px; border-radius: 2px; text-decoration: none; }
     
-    /* Nút bị vô hiệu hóa khi hết hàng */
     .btn-disabled { background: #f5f5f5 !important; color: #ccc !important; border: 1px solid #ddd !important; cursor: not-allowed !important; pointer-events: none; }
 
     /* Sản phẩm liên quan */
     .related-title { font-size: 18px; font-weight: 500; color: #555; margin: 40px 0 20px 0; text-transform: uppercase; }
     .related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 40px; }
-    .related-item { background: #fff; padding: 10px; transition: 0.3s; border: 1px solid transparent; text-align: center; text-decoration: none; border: 1px solid #eee; }
+    .related-item { background: #fff; padding: 10px; transition: 0.3s; text-align: center; text-decoration: none; border: 1px solid #eee; }
     .related-item:hover { border: 1px solid #ee4d2d; box-shadow: 0 1px 20px rgba(0,0,0,.05); }
     .related-img { width: 100%; height: 180px; object-fit: contain; }
     .related-name { font-size: 13px; color: #333; margin: 10px 0 5px 0; height: 38px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
     .related-price { color: #ee4d2d; font-size: 15px; font-weight: 500; }
+    
     .related-btn-detail {
         display: block;
         margin-top: 10px;
         padding: 6px 0;
-        background: #008d81; /* Màu xanh giống thanh tiêu đề mô tả của bạn */
+        background: #008d81;
         color: #fff !important;
         text-decoration: none;
         font-size: 12px;
         border-radius: 2px;
         transition: 0.3s;
     }
-    .related-btn-detail:hover {
-        background: #005a52;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .related-btn-detail {
-        display: block;
-        margin-top: 10px;
-        padding: 6px 0;
-        background: #008d81; /* Màu xanh giống thanh tiêu đề mô tả của bạn */
-        color: #fff !important;
-        text-decoration: none;
-        font-size: 12px;
-        border-radius: 2px;
-        transition: 0.3s;
-    }
-    .related-btn-detail:hover {
-        background: #005a52;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
+    .related-btn-detail:hover { background: #005a52; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
 </style>
 
 <div class="product-detail-container">
@@ -80,7 +62,6 @@
             @endif
         </div>
 
-        {{-- KIỂM TRA BIẾN stock_quantity TỪ DATABASE CỦA BẠN --}}
         <div class="stock-status">
             Trạng thái: 
             @if($product->stock_quantity > 0)
@@ -98,7 +79,6 @@
         </div>
 
         <div class="buy-group">
-            {{-- CHỈ CHO PHÉP MUA KHI stock_quantity > 0 --}}
             @if($product->stock_quantity > 0)
                 @guest
                     <a href="{{ route('login') }}" onclick="alert('Vui lòng đăng nhập!')" class="btn-add-cart-small">Thêm vào giỏ</a>
@@ -108,13 +88,13 @@
                     <a href="{{ route('client.add_cart', $product->id) }}" class="btn-buy-now-small">Mua Ngay</a>
                 @endguest
             @else
-                {{-- HIỂN THỊ NÚT KHÓA KHI HẾT HÀNG --}}
                 <button class="btn-add-cart-small btn-disabled">Thêm vào giỏ</button>
                 <button class="btn-buy-now-small btn-disabled">Hết hàng</button>
             @endif
         </div>
     </div>
 </div>
+
 @if(isset($relatedProducts) && $relatedProducts->count() > 0)
     <h2 class="related-title">Sản phẩm liên quan</h2>
     <div class="related-grid">
@@ -127,12 +107,10 @@
                         {{ number_format($item->discount_price > 0 ? $item->discount_price : $item->price, 0, ',', '.') }}đ
                     </div>
                 </a>
-                {{-- Nút xem chi tiết thêm mới ở đây --}}
-                <a href="{{ route('client.product_detail', $item->slug) }}" class="related-btn-detail">
-                    Xem chi tiết
-                </a>
+                <a href="{{ route('client.product_detail', $item->slug) }}" class="related-btn-detail">Xem chi tiết</a>
             </div>
         @endforeach
     </div>
 @endif
+
 @endsection
