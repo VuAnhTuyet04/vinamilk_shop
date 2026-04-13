@@ -44,16 +44,25 @@
                 <small>Sữa tươi chuẩn quốc tế</small>
             </div>
 
-            <div class="search-box">
-                <form action="{{ route('search') }}" method="GET">
-                    <select name="category">
-                        <option value="all">Tất cả</option>
-                    </select>
-                    <input type="text" name="query" placeholder="Tìm kiếm sản phẩm sữa...">
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                </form>
-            </div>
-
+          <div class="search-box">
+    {{-- Đảm bảo route('search') đã được định nghĩa trong web.php --}}
+    <form action="{{ route('search') }}" method="GET">
+        <select name="category">
+            <option value="all" {{ request('category') == 'all' ? 'selected' : '' }}>Tất cả</option>
+            {{-- Kiểm tra nếu có danh mục thì mới lặp để tránh lỗi --}}
+            @if(isset($categories))
+                @foreach($categories as $cat)
+                    <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>
+                        {{ $cat->name }}
+                    </option>
+                @endforeach
+            @endif
+        </select>
+        <input type="text" name="query" value="{{ request('query') }}" placeholder="Tìm kiếm sản phẩm sữa...">
+        
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+</div>
             <div class="header-contact">
                 <div class="contact-item">
                     <i class="fa fa-phone"></i>

@@ -10,7 +10,7 @@
         padding: 0 15px;
     }
 
-    /* Sidebar danh mục kiểu đứng - Giống image_bfeae6.png */
+    /* Sidebar danh mục kiểu đứng */
     .category-sidebar {
         width: 260px;
         flex-shrink: 0;
@@ -21,7 +21,7 @@
     }
 
     .sidebar-header {
-        background: #0056b3; /* Màu xanh đậm giống mẫu */
+        background: #0056b3;
         color: white;
         padding: 12px 15px;
         display: flex;
@@ -42,7 +42,7 @@
     }
 
     .category-list li {
-        border-bottom: 1px solid #eee; /* Đường kẻ phân cách các danh mục */
+        border-bottom: 1px solid #eee;
     }
 
     .category-list li:last-child {
@@ -90,6 +90,7 @@
         padding: 15px;
         text-align: center;
         transition: 0.3s;
+        background: #fff;
     }
 
     .product-card:hover {
@@ -114,10 +115,16 @@
     </aside>
 
     <main class="product-content">
-        <h1 class="page-title">Tất cả sản phẩm Vinamilk</h1>
+        <h1 class="page-title">
+            @if(isset($query) && $query != '')
+                KẾT QUẢ TÌM KIẾM CHO: "{{ $query }}"
+            @else
+                Tất cả sản phẩm Vinamilk
+            @endif
+        </h1>
         
         <div class="product-grid">
-            @foreach($products as $product)
+            @forelse($products as $product)
                 <div class="product-card">
                     <div class="product-img" style="height: 200px; margin-bottom: 15px;">
                         <img src="{{ asset('images/' . $product->thumbnail) }}" 
@@ -130,7 +137,14 @@
                     </h3>
                     
                     <p style="color: #d70018; font-weight: bold; font-size: 18px; margin: 10px 0;">
-                        {{ number_format($product->price, 0, ',', '.') }}đ
+                        @if($product->discount_price > 0)
+                            {{ number_format($product->discount_price, 0, ',', '.') }}đ
+                            <span style="text-decoration: line-through; color: #999; font-size: 14px; margin-left: 5px;">
+                                {{ number_format($product->price, 0, ',', '.') }}đ
+                            </span>
+                        @else
+                            {{ number_format($product->price, 0, ',', '.') }}đ
+                        @endif
                     </p>
                     
                     <a href="{{ route('client.product_detail', $product->slug) }}" 
@@ -138,7 +152,12 @@
                         Xem chi tiết
                     </a>
                 </div>
-            @endforeach
+            @empty
+                <div style="grid-column: span 3; text-align: center; padding: 50px 0;">
+                    <img src="{{ asset('images/no-product.png') }}" alt="" style="width: 100px; opacity: 0.5;">
+                    <p style="color: #666; margin-top: 10px;">Không tìm thấy sản phẩm nào phù hợp với yêu cầu của bạn.</p>
+                </div>
+            @endforelse
         </div>
     </main>
 </div>

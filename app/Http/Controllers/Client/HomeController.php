@@ -9,31 +9,46 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
-    {
-        $categories = \App\Models\Category::all();
+  public function index()
+{
+    // Lấy 8 sản phẩm có số lượng tồn kho nhiều nhất (Sản phẩm bán chạy theo ý bạn)
+    $bestSellers = Product::where('is_active', 1)
+        ->orderBy('stock_quantity', 'desc')
+        ->take(8)
+        ->get();
 
-    // 1. Lấy 8 sản phẩm bán chạy nhất (Giả sử bạn có cột 'sold_count' hoặc tính theo đơn hàng)
-    // Nếu chưa có hệ thống tính, tạm thời dùng orderBy('id', 'desc') hoặc 'sold_count'
-    $bestSellers = \App\Models\Product::orderBy('id', 'desc')->take(8)->get(); 
+    // Lấy 8 sản phẩm vừa mới thêm vào hệ thống
+    $newProducts = Product::where('is_active', 1)
+        ->orderBy('created_at', 'desc')
+        ->take(8)
+        ->get();
 
-    // 2. Lấy 8 sản phẩm mới nhất
-    $newProducts = \App\Models\Product::latest()->take(8)->get();
+    $categories = Category::all();
 
-    return view('client.index', compact('categories', 'bestSellers', 'newProducts'));
-    }
+    return view('client.index', compact('bestSellers', 'newProducts', 'categories'));
+}
 
-    // Hàm bổ sung để xử lý khi click vào danh mục (đã fix lỗi Route ở bước trước)
-    public function category($slug)
-    {
-        $categories = Category::all();
-        $category = Category::where('slug', $slug)->firstOrFail();
-        $products = Product::where('category_id', $category->id)
-                            ->where('is_active', 1)
-                            ->get();
+public function category($slug)
+{
+    // 1. Lấy tất cả danh mục cho sidebar
+    $categories = Category::all();
 
-        return view('client.index', compact('categories', 'products'));
-    }
+    // 2. Tìm danh mục hiện tại dựa trên slug
+    $category = Category::where('slug', $slug)->firstOrFail();
+
+    // 3. Lấy sản phẩm thuộc danh mục này
+    $products = Product::where('category_id', $category->id)
+                        ->where('is_active', 1)
+                        ->get();
+
+    // 4. Lấy dữ liệu bổ sung để tránh lỗi "Undefined variable" ở giao diện index
+    // Vì bảng products của bạn chưa có cột is_best_seller, ta lấy ngẫu nhiên 4 cái
+    $bestSellers = Product::where('is_active', 1)->inRandomOrder()->take(4)->get();
+    $newProducts = Product::where('is_active', 1)->latest()->take(4)->get();
+
+    // 5. Trả về view 'client.index' và truyền đầy đủ các biến
+    return view('client.index', compact('categories', 'category', 'products', 'bestSellers', 'newProducts'));
+}
     public function allProducts()
 {
     $categories = \App\Models\Category::all(); // Lấy để hiện ở sidebar
@@ -54,6 +69,19 @@ public function productDetail($slug) {
         ->get();
 
     return view('client.product_detail', compact('product', 'relatedProducts'));
+}
+public function search(Request $request)
+{
+    $query = $request->input('query');
+    
+    // Tìm kiếm sản phẩm
+    $products = Product::where('name', 'LIKE', "%{$query}%")
+                        ->where('is_active', 1)
+                        ->get();
+
+    // Lấy thêm categories để hiện ở sidebar (tránh lỗi undefined)
+    $categories = Category::all(); 
+return view('client.search', compact('products', 'categories'));
 }
 public function about() {
     return view('client.about');

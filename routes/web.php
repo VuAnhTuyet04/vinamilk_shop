@@ -109,3 +109,4 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/messages', [ChatController::class, 'sendMessage']);
 });
 Route::get('/admin/unread-messages-count', [ChatController::class, 'getUnreadCount']);
+Route::get('/search', [HomeController::class, 'search'])->name('search');
