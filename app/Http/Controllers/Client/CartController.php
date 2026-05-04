@@ -81,8 +81,6 @@ public function checkout(Request $request) {
         $total += $item['price'] * $item['quantity']; 
     }
 
-    // 3. Lưu vào Database (Bảng orders)
-    // Việc tạo bản ghi ở đây sẽ giúp Dashboard sum('total_amount') nhảy số ngay lập tức
     \App\Models\Order::create([
         'user_id'          => \Illuminate\Support\Facades\Auth::id(),
         'total_amount'     => $total, // Cột này cực kỳ quan trọng để tính doanh thu

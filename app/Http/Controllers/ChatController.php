@@ -34,16 +34,14 @@ class ChatController extends Controller
     return response()->json($messages);
 }
    public function getUnreadCount() {
-    // Đếm những tin nhắn mà:
-    // 1. is_from_admin = 0 (khách gửi)
-    // 2. is_read = 0 (admin chưa xem)
+   
     $count = \App\Models\Message::where('is_from_admin', 0)
                                 ->where('is_read', 0)
                                 ->count();
                                 
     return response()->json(['unread_count' => $count]);
 }
-    // Gửi tin nhắn (Cả Admin và Khách dùng chung)
+    
     public function sendMessage(Request $request) {
         $user = Auth::user();
         $isAdmin = ($user && isset($user->role) && $user->role == 'admin') ? 1 : 0;
@@ -56,7 +54,7 @@ class ChatController extends Controller
 
         return response()->json($message);
     }
-    // Thêm vào ChatController.php
+  
 
 
 }

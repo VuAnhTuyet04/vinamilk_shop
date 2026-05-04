@@ -2,7 +2,6 @@
 
 @section('content')
 <style>
-    /* CSS GỐC CỦA BẠN - ĐẦY ĐỦ */
     .home-banner-section { max-width: 1100px; margin: 15px auto; padding: 0 15px; display: flex; gap: 10px; height: 300px; }
     .banner-main { flex: 2; border-radius: 8px; overflow: hidden; position: relative; }
     .swiper { width: 100%; height: 100%; }
@@ -26,8 +25,7 @@
     .product-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .product-img img { width: 100%; height: 160px; object-fit: contain; }
     .discount { position: absolute; top: 5px; left: 5px; background: red; color: white; font-size: 11px; padding: 2px 5px; border-radius: 3px; z-index: 10; }
-    
-    /* CSS CHAT */
+ 
     #chat-toggle-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #0056b3; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 9999; }
     #chat-container { position: fixed; bottom: 90px; right: 20px; width: 320px; height: 400px; background: white; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 9999; overflow: hidden; }
     .chat-header { background: #0056b3; color: white; padding: 12px; font-weight: bold; display: flex; justify-content: space-between; }
@@ -110,7 +108,6 @@
             </div>
         @endif
 
-        {{-- SẢN PHẨM MỚI --}}
         @if(isset($newProducts))
             <div class="section-header"><h2>SẢN PHẨM MỚI</h2></div>
             <div class="product-grid">
@@ -140,7 +137,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    // JS CHAT & SWIPER
+
     const userId = "{{ Auth::id() ?? '' }}";
     const chatBox = document.getElementById('chat-container');
     const chatBody = document.getElementById('chat-body');
